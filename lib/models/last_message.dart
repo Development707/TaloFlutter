@@ -12,11 +12,13 @@ class LastMessage {
   final String content;
   final MessageType type;
   final DateTime createdAt;
-  final List<ShortUser>? manipulatedUserIds;
-  final List<ShortUser>? tags;
-  final List<ShortUser>? deletedUserIds;
-  final List<React>? reacts;
+  final List<ShortUser> manipulatedUserIds;
+  final List<ShortUser> tags;
+  final List<ShortUser> deletedUserIds;
+  final List<React> reacts;
   final MessageStatus messageStatus;
+  final String question;
+  final List<Option> options;
 
   LastMessage({
     required this.id,
@@ -24,14 +26,16 @@ class LastMessage {
     required this.content,
     required this.type,
     required this.createdAt,
-    this.manipulatedUserIds,
-    this.tags,
-    this.deletedUserIds,
-    this.reacts,
+    required this.manipulatedUserIds,
+    required this.tags,
+    required this.deletedUserIds,
+    required this.reacts,
     this.messageStatus = MessageStatus.VIEWED,
+    required this.question,
+    required this.options,
   });
 
-  factory LastMessage.fromJson(Map<String, dynamic>? json) {
+  factory LastMessage.fromJson(Map<String, dynamic> json) {
     MessageType convertTypeMessage(dynamic status) {
       return MessageType.values.firstWhere(
         (e) => e.toString() == "MessageType." + status,
@@ -39,18 +43,40 @@ class LastMessage {
     }
 
     return LastMessage(
-      id: json!["id"],
-      user: ShortUser.fromJson(json["user"]),
-      content: json["content"],
-      type: convertTypeMessage(json["type"]),
-      createdAt: DateTime.parse(json["createdAt"]),
-      deletedUserIds: ShortUser.fromJsonArray(json["deletedUserIds"]),
       manipulatedUserIds: ShortUser.fromJsonArray(json["manipulatedUserIds"]),
-      reacts: React.fromJsonArray(json["reacts"]),
+      content: json["content"],
       tags: ShortUser.fromJsonArray(json["tags"]),
+      type: convertTypeMessage(json["type"]),
+      deletedUserIds: ShortUser.fromJsonArray(json["deletedUserIds"]),
+      reacts: React.fromJsonArray(json["reacts"]),
+      createdAt: DateTime.parse(json["createdAt"]),
+      id: json["id"],
+      user: ShortUser.fromJson(json["user"]),
+      question: json["question"] ?? "",
+      options: Option.fromJsonArray(json["options"] ?? []),
     );
   }
 
   static List<LastMessage> fromJsonArray(List<dynamic> jsonArray) =>
       List<LastMessage>.from(jsonArray.map((lm) => LastMessage.fromJson(lm)));
+}
+
+class Option {
+  final String name;
+  final List<ShortUser> userIds;
+
+  Option({
+    required this.name,
+    required this.userIds,
+  });
+
+  factory Option.fromJson(Map<String, dynamic>? json) {
+    return Option(
+      name: json!["name"],
+      userIds: ShortUser.fromJsonArray(json["userIds"]),
+    );
+  }
+
+  static List<Option> fromJsonArray(List<dynamic> jsonArray) =>
+      List<Option>.from(jsonArray.map((op) => Option.fromJson(op)));
 }

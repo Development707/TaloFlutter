@@ -10,26 +10,26 @@ class Contacts {
   final String phone;
   final bool isExists;
   final TypeStatus status;
-  final int? numberMutualGroup;
-  final int? numberMutualFriend;
-  final String? id;
-  final Avatar? avatar;
-  final Avatar? coverPhoto;
-  final DateOfBirth? dateOfBirth;
-  final bool? gender;
+  final int numberMutualGroup;
+  final int numberMutualFriend;
+  final String id;
+  final Avatar avatar;
+  final Avatar coverPhoto;
+  final DateOfBirth dateOfBirth;
+  final bool gender;
 
   Contacts({
     required this.name,
     required this.phone,
     required this.isExists,
+    required this.dateOfBirth,
+    required this.avatar,
+    required this.coverPhoto,
     this.status = TypeStatus.NOT_FRIEND,
-    this.numberMutualGroup,
-    this.numberMutualFriend,
-    this.id,
-    this.avatar,
-    this.coverPhoto,
-    this.dateOfBirth,
-    this.gender,
+    this.numberMutualGroup = 0,
+    this.numberMutualFriend = 0,
+    this.id = "",
+    this.gender = true,
   });
 
   factory Contacts.fromJson(Map<String, dynamic> json) {
@@ -49,6 +49,7 @@ class Contacts {
         numberMutualFriend: json["numberMutualFriend"],
         id: json["id"],
         avatar: Avatar.fromJson(json["avatar"]),
+        coverPhoto: Avatar.fromJson(json["coverPhoto"]),
         dateOfBirth: DateOfBirth.fromJson(json["dateOfBirth"]),
         gender: json["gender"],
       );
@@ -57,6 +58,9 @@ class Contacts {
         name: json["name"],
         phone: json["phone"],
         isExists: json["isExists"],
+        avatar: Avatar(),
+        coverPhoto: Avatar(),
+        dateOfBirth: DateOfBirth(),
       );
     }
   }
@@ -69,8 +73,8 @@ class Contacts {
         "numberMutualGroup": numberMutualGroup,
         "numberMutualFriend": numberMutualFriend,
         "id": id,
-        "avatar": avatar!.toJson(),
-        "dateOfBirth": dateOfBirth!.toJson(),
+        "avatar": avatar.toJson(),
+        "dateOfBirth": dateOfBirth.toJson(),
         "gender": gender,
       };
 

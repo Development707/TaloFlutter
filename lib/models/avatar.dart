@@ -2,7 +2,7 @@ class Avatar {
   final String? url;
   final String? name;
 
-  Avatar({required this.url, required this.name});
+  Avatar({this.url, this.name});
 
   factory Avatar.fromJson(Map<String, dynamic> json) {
     return Avatar(

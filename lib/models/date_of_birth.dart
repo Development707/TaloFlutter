@@ -4,9 +4,9 @@ class DateOfBirth {
   final int year;
 
   DateOfBirth({
-    required this.day,
-    required this.month,
-    required this.year,
+    this.day = 0,
+    this.month = 0,
+    this.year = 0,
   });
 
   factory DateOfBirth.fromJson(Map<String, dynamic> json) {

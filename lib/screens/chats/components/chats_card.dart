@@ -27,7 +27,7 @@ class ChatCard extends StatelessWidget {
             Stack(
               children: [
                 CachedNetworkImage(
-                    imageUrl: conversation.avatar!.url ??
+                    imageUrl: conversation.avatar.url ??
                         "https://storage.googleapis.com/talo-public-file/no-avatar.png",
                     imageBuilder: (context, imageProvider) => Container(
                         width: 40,
@@ -72,16 +72,15 @@ class ChatCard extends StatelessWidget {
                             fontSize: 15, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
                     Opacity(
-                      opacity: 0.6,
-                      child: conversation.lastMessage != null
-                          ? Text(
-                              conversation.lastMessage!.user.name +
-                                  ": " +
-                                  conversation.lastMessage!.content,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis)
-                          : const Text(""),
-                    ),
+                        opacity: 0.6,
+                        child: conversation.lastMessage != null
+                            ? Text(
+                                conversation.lastMessage!.user.name +
+                                    ": " +
+                                    conversation.lastMessage!.content,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis)
+                            : Text("")),
                   ],
                 ),
               ),

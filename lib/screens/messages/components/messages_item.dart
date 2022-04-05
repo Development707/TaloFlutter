@@ -1,11 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/last_message.dart';
 import '../../../plugin/constants.dart';
-import 'message_content/audio_message.dart';
+import 'message_content/image_message.dart';
 import 'message_content/notify_messageg.dart';
+import 'message_content/sticker_message.dart';
 import 'message_content/text_message.dart';
 import 'message_content/video_message.dart';
+import 'message_content/vote_message.dart';
 import 'message_status.dart';
 
 class MessageItem extends StatelessWidget {
@@ -30,33 +33,52 @@ class MessageItem extends StatelessWidget {
         case MessageType.NOTIFY:
           return NotifyMessage(message: message);
         case MessageType.IMAGE:
-          return AudioMessage(
-            message: message,
-            isSender: isSender,
-          );
+          return ImageMessage(message: message);
         case MessageType.VIDEO:
           return VideoMessage(message: message);
+        case MessageType.STICKER:
+          return StickerMessage(message: message);
+        case MessageType.VOTE:
+          return VoteMessage(message: message, isSender: isSender);
         default:
-          return const SizedBox();
+          return Text(message.type.toString());
       }
     }
 
     return Padding(
       padding: const EdgeInsets.all(kDefaultPadding / 2),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment:
             isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
-          if (message.user.id == '') ...[
-            const CircleAvatar(
-                radius: 12,
-                backgroundImage: AssetImage("assets/images/talo.png")),
+          if (!isSender) ...[
+            CachedNetworkImage(
+                imageUrl: message.user.avatar.url ??
+                    "https://storage.googleapis.com/talo-public-file/no-avatar.png",
+                imageBuilder: (context, imageProvider) => Container(
+                    width: 25,
+                    height: 25,
+                    decoration: BoxDecoration(
+                        color: Colors.white54,
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover))),
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error)),
             const SizedBox(width: kDefaultPadding / 2)
           ],
-          messageContent(message, isSender),
-          isSender
-              ? StatusMessage(status: message.messageStatus)
-              : const SizedBox(),
+          Stack(clipBehavior: Clip.none, children: [
+            messageContent(message, isSender),
+            isSender
+                ? Positioned(
+                    bottom: 2,
+                    right: -12,
+                    child: StatusMessage(status: message.messageStatus))
+                : const SizedBox(),
+          ]),
+          SizedBox(width: isSender ? 5 : 0),
         ],
       ),
     );

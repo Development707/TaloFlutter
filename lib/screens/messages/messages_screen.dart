@@ -33,7 +33,7 @@ class MessagesScreen extends StatelessWidget {
       title: Row(
         children: [
           CachedNetworkImage(
-              imageUrl: conversation!.avatar!.url ??
+              imageUrl: conversation!.avatar.url ??
                   "https://storage.googleapis.com/talo-public-file/no-avatar.png",
               imageBuilder: (context, imageProvider) => Container(
                   width: 45,

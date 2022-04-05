@@ -7,27 +7,29 @@ class Conversation {
   final String id;
   final String name;
   final String type;
-  final Avatar? avatar;
-  final String? leaderId;
+  final Avatar avatar;
+  final String leaderId;
   final List<ShortUser> members;
   final int totalMembers;
   final int numberUnread;
   final bool isNotify;
   final bool isJoinFromLink;
   final LastMessage? lastMessage;
+  final List<String> managerIds;
 
   Conversation({
     required this.id,
     required this.name,
+    required this.avatar,
     required this.type,
     required this.members,
     required this.totalMembers,
     required this.numberUnread,
     required this.isNotify,
     required this.isJoinFromLink,
-    this.avatar,
-    this.leaderId,
     this.lastMessage,
+    required this.leaderId,
+    required this.managerIds,
   });
 
   // Json - Object
@@ -37,22 +39,23 @@ class Conversation {
       name: json["name"],
       avatar: Avatar.fromJson(json["avatar"]),
       type: json["type"],
-      leaderId: json["leaderId"],
       members: ShortUser.fromJsonArray(json["members"]),
       totalMembers: json["totalMembers"],
       numberUnread: json["numberUnread"],
       isNotify: json["isNotify"],
       isJoinFromLink: json["isJoinFromLink"],
-      lastMessage: json["lastMessage"] == null
-          ? null
-          : LastMessage.fromJson(json["lastMessage"]),
+      lastMessage: json["lastMessage"] != null
+          ? LastMessage.fromJson(json["lastMessage"])
+          : null,
+      leaderId: json["leaderId"] ?? "",
+      managerIds: [],
     );
   }
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "type": type,
-        "avatar": avatar!.toJson(),
+        "avatar": avatar.toJson(),
         "members": members
       };
   static List<Conversation> listFromJsonArray(List<dynamic> list) =>

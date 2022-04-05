@@ -13,8 +13,13 @@ class NotifyMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String user = " ";
+    for (var sUser in message.manipulatedUserIds) {
+      user += sUser.name + ", ";
+    }
+
     return Container(
-        width: MediaQuery.of(context).size.width * 0.8,
+        width: MediaQuery.of(context).size.width * 0.7,
         alignment: Alignment.center,
         padding: const EdgeInsets.symmetric(
           horizontal: kDefaultPadding * 0.75,
@@ -24,7 +29,8 @@ class NotifyMessage extends StatelessWidget {
           color: kTertiaryColor.withOpacity(0.5),
           borderRadius: BorderRadius.circular(30),
         ),
-        child: Text(message.content,
+        child: Text(message.content + user,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Theme.of(context).textTheme.bodyText1?.color,
               fontWeight: FontWeight.bold,
