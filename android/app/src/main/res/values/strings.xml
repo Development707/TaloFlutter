@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TALO</string>
+    <string name="facebook_app_id">2733214423640814</string>
+    <string name="fb_login_protocol_scheme">fb2733214423640814</string>
+    <string name="facebook_client_token">e165bec9bf017159a25883a58c4f823a</string>
+</resources>

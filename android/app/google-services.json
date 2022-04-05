@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "771338672762",
+    "project_id": "talo-342211",
+    "storage_bucket": "talo-342211.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:771338672762:android:45d7b26bbbf29d8cadb9c3",
+        "android_client_info": {
+          "package_name": "com.example.flutter_mobile_chatapp_v4_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "771338672762-bs8t8igplh6m93s1ovs3r6kaaiug4h7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJrVEyzwx0W3mAgVHg1_DzsRCf2rAYygU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "771338672762-bs8t8igplh6m93s1ovs3r6kaaiug4h7u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "771338672762-b5552jv7smvaj07jvgb00j6hu3v8n4jo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterMobileChatappV411.host"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
