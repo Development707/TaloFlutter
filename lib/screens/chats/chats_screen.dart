@@ -40,7 +40,13 @@ class _ChatsScreenState extends State<ChatsScreen> {
           if (snapshot.hasData) {
             return buildChat(snapshot.data);
           } else {
-            return const LinearProgressIndicator(color: kPrimaryColor);
+            return const Scaffold(
+                body: Center(
+                    child: SizedBox(
+                        height: 50,
+                        width: 50,
+                        child:
+                            CircularProgressIndicator(color: kPrimaryColor))));
           }
         });
   }

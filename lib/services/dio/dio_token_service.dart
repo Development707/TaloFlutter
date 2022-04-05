@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DioToken {
   final _storage = const FlutterSecureStorage();
-  static const baseURL = "https://talo-chats.herokuapp.com";
+  static const baseURL = "http://34.124.134.87/api";
   Dio api = Dio(BaseOptions(
     receiveDataWhenStatusError: true,
     connectTimeout: 20 * 1000,

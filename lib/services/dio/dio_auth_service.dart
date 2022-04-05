@@ -10,7 +10,7 @@ import '../../models/token.dart';
 class DioAuth {
   // Andoird 10.0.2.2
   // Web 127.0.0.1
-  static const baseURL = "https://talo-chats.herokuapp.com";
+  static const baseURL = "http://34.124.134.87/api";
   static const accountEndpoint = "/account";
   static const firebaseEndpoint = "/firebase/auth";
   final _storage = const FlutterSecureStorage();

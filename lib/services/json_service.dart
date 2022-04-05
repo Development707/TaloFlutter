@@ -23,7 +23,7 @@ Map<String, dynamic> stringToJson(String? string) {
 Future<bool> hasNetwork() async {
   try {
     if (kIsWeb) return true;
-    final result = await InternetAddress.lookup("talo-chats.herokuapp.com");
+    final result = await InternetAddress.lookup("www.google.com");
     return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
   } on SocketException catch (_) {
     Fluttertoast.showToast(
