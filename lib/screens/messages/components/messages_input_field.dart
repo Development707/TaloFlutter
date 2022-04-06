@@ -16,7 +16,7 @@ class MessagesInputField extends StatefulWidget {
 class _MessagesInputFieldState extends State<MessagesInputField> {
   bool showEmoji = false;
   FocusNode focusNode = FocusNode();
-  TextEditingController _ctrlText = TextEditingController();
+  final TextEditingController _ctrlText = TextEditingController();
 
   @override
   void initState() {
@@ -50,8 +50,6 @@ class _MessagesInputFieldState extends State<MessagesInputField> {
               child: WillPopScope(
                 child: Row(
                   children: [
-                    const Icon(Icons.mic, color: kPrimaryColor),
-                    const SizedBox(width: kDefaultPadding / 2),
                     Expanded(
                         flex: 1,
                         child: Container(
@@ -113,7 +111,11 @@ class _MessagesInputFieldState extends State<MessagesInputField> {
                                   ?.withOpacity(0.6),
                             ),
                           ]),
-                        ))
+                        )),
+                    IconButton(
+                      icon: const Icon(Icons.send, color: kPrimaryColor),
+                      onPressed: () {},
+                    ),
                   ],
                 ),
                 onWillPop: () {

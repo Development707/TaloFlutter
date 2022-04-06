@@ -8,7 +8,7 @@ import 'messages_input_field.dart';
 import 'messages_item.dart';
 
 class MessagesBody extends StatefulWidget {
-  MessagesBody({Key? key, this.message}) : super(key: key);
+  const MessagesBody({Key? key, this.message}) : super(key: key);
   final Message? message;
 
   @override
@@ -17,7 +17,7 @@ class MessagesBody extends StatefulWidget {
 
 class _MessagesBodyState extends State<MessagesBody> {
   final ProfileStore store = ProfileStore();
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
