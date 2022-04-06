@@ -7,14 +7,21 @@ import '../../../store/profile_store.dart';
 import 'messages_input_field.dart';
 import 'messages_item.dart';
 
-class MessagesBody extends StatelessWidget {
+class MessagesBody extends StatefulWidget {
   MessagesBody({Key? key, this.message}) : super(key: key);
   final Message? message;
+
+  @override
+  State<MessagesBody> createState() => _MessagesBodyState();
+}
+
+class _MessagesBodyState extends State<MessagesBody> {
   final ProfileStore store = ProfileStore();
+  ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    return message != null
+    return widget.message != null
         ? FutureBuilder<User>(
             future: store.getProFile(),
             builder: (context, snapshot) {
@@ -38,10 +45,11 @@ class MessagesBody extends StatelessWidget {
         Expanded(
             flex: 1,
             child: ListView.builder(
-              itemCount: message!.data.length,
+              controller: _scrollController,
+              itemCount: widget.message!.data.length,
               itemBuilder: (context, index) => MessageItem(
-                  message: message!.data[index],
-                  isSender: message!.data[index].user.id == user!.id),
+                  message: widget.message!.data[index],
+                  isSender: widget.message!.data[index].user.id == user!.id),
             )),
         const MessagesInputField(),
       ],
