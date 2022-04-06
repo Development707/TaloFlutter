@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobile_chatapp_v4_2/plugin/constants.dart';
 
 import '../../../models/contacts.dart';
+import '../../../store/conversation_store.dart';
+import '../../messages/messages_screen.dart';
 
 class ConstactsItem extends StatelessWidget {
   final Contacts contacts;
@@ -13,6 +15,7 @@ class ConstactsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ConversationStore store = ConversationStore();
     return Container(
       height: 70,
       margin: const EdgeInsets.only(bottom: kDefaultPadding / 4),
@@ -75,8 +78,19 @@ class ConstactsItem extends StatelessWidget {
               ],
             ),
           )),
-          const Icon(Icons.arrow_forward_ios_outlined,
-              size: 25, color: kPrimaryColor),
+          IconButton(
+            icon: const Icon(Icons.arrow_forward_ios_outlined,
+                size: 25, color: kPrimaryColor),
+            onPressed: () {
+              if (contacts.isExists) {
+                store.getDual(contacts.id).then((conversation) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          MessagesScreen(conversation: conversation)));
+                });
+              }
+            },
+          ),
         ],
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 import '../../../../models/last_message.dart';
 
@@ -18,30 +18,35 @@ class VoteMessage extends StatelessWidget {
     int numOp = message.options.length;
     return Column(
       children: [
-        Text(message.content),
-        Text(message.question),
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.7,
-          height: numOp * 50,
+          height: numOp * 60,
           child: ClipRRect(
-            child: BarChart(
+            child: charts.BarChart(
               convertVote(context, message.options),
+              behaviors: [charts.ChartTitle(message.question)],
               animate: true,
               vertical: false,
-              domainAxis: const OrdinalAxisSpec(renderSpec: NoneRenderSpec()),
-              barRendererDecorator: BarLabelDecorator<String>(
-                insideLabelStyleSpec:
-                    TextStyleSpec(color: Color.fromOther(color: Color.black)),
-                outsideLabelStyleSpec: TextStyleSpec(),
+              domainAxis: const charts.OrdinalAxisSpec(
+                  renderSpec: charts.NoneRenderSpec()),
+              barRendererDecorator: charts.BarLabelDecorator(
+                insideLabelStyleSpec: charts.TextStyleSpec(),
+                outsideLabelStyleSpec: charts.TextStyleSpec(),
               ),
             ),
           ),
         ),
+        Text(message.content,
+            style: TextStyle(
+              color: isSender
+                  ? Colors.white
+                  : Theme.of(context).textTheme.bodyText1?.color,
+            )),
       ],
     );
   }
 
-  List<Series<VoteData, String>> convertVote(
+  List<charts.Series<VoteData, String>> convertVote(
       BuildContext context, List<Option> options) {
     List<VoteData> data = [];
     for (var option in options) {
@@ -49,7 +54,7 @@ class VoteMessage extends StatelessWidget {
     }
 
     return [
-      Series<VoteData, String>(
+      charts.Series<VoteData, String>(
         id: 'VoteResult',
         // colorFn: (_, pos) {
         //   if (pos! % 2 == 0) {

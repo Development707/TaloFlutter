@@ -37,4 +37,20 @@ class ConversationDio {
       throw Exception(err.message);
     }
   }
+
+  Future<dynamic> createDual(String userId) async {
+    try {
+      final res =
+          await dioToken.api.post(conversationEndpoint + "/dual/" + userId);
+      return res.data;
+    } on DioError catch (err) {
+      log("Dio Conversation Service: " + err.response.toString());
+      if (err.type == DioErrorType.response) {
+        if (err.response?.statusCode == 404) {
+          throw Exception('Error: ${err.response?.data["message"]}');
+        }
+      }
+      throw Exception(err.message);
+    }
+  }
 }

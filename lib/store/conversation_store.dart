@@ -1,3 +1,4 @@
+import 'package:flutter_mobile_chatapp_v4_2/models/create_conversation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/conversation.dart';
@@ -35,7 +36,21 @@ class ConversationStore {
       var json = await client.findById(id);
       await prefs.setString(conversationKey + id, jsonToString(json));
     } on Exception catch (_) {}
-    data = stringToJson(prefs.getString(id));
+    data = stringToJson(prefs.getString(conversationKey + id));
+    return Conversation.fromJson(data);
+  }
+
+  Future<Conversation> getDual(String userId) async {
+    Map<String, dynamic> data;
+    String conversationId = "";
+    var prefs = await _prefs;
+    try {
+      var json = await client.createDual(userId);
+      var checked = CreateConversation.fromeJson(json);
+      conversationId = checked.conversationId;
+      return findById(checked.conversationId);
+    } on Exception catch (_) {}
+    data = stringToJson(prefs.getString(conversationKey + conversationId));
     return Conversation.fromJson(data);
   }
 }
