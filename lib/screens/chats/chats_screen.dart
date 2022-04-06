@@ -65,7 +65,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   FloatingActionButton buildFloatingActionButton() {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.of(context).pushNamed("/chat/create-group");
+      },
       backgroundColor: kPrimaryColor,
       child: const Icon(
         Icons.person_add_alt_1,

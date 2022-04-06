@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'screens/chats/chats_screen.dart';
+import 'screens/group/create_group_screen.dart';
 import 'screens/login/login_screen_animation.dart';
 import 'screens/messages/messages_screen.dart';
 import 'screens/profile/components/profile_edit.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
             globals.isFistLogin ? const WelcomeScreen() : const ChatsScreen(),
         "/login": (_) => const LoginScreenAnimation(),
         "/chat": (_) => const ChatsScreen(),
-        "/chat/detail": (_) => MessagesScreen(),
+        "/chat/create-group": (_) => const CreateGroupScreen(),
         "/profile": (_) => const ProfileEdit(),
       },
     );

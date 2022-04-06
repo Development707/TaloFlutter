@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -42,6 +43,25 @@ class ConversationDio {
     try {
       final res =
           await dioToken.api.post(conversationEndpoint + "/dual/" + userId);
+      return res.data;
+    } on DioError catch (err) {
+      log("Dio Conversation Service: " + err.response.toString());
+      if (err.type == DioErrorType.response) {
+        if (err.response?.statusCode == 404) {
+          throw Exception('Error: ${err.response?.data["message"]}');
+        }
+      }
+      throw Exception(err.message);
+    }
+  }
+
+  Future<dynamic> createGroup(List<String> userIds) async {
+    try {
+      Map<String, dynamic> body = {"userIds": userIds};
+      final res = await dioToken.api.post(
+        conversationEndpoint,
+        data: body,
+      );
       return res.data;
     } on DioError catch (err) {
       log("Dio Conversation Service: " + err.response.toString());

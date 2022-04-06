@@ -18,6 +18,19 @@ class Contacts {
   final DateOfBirth dateOfBirth;
   final bool gender;
 
+  String convertTypeStatus() {
+    switch (status) {
+      case TypeStatus.FRIEND:
+        return "Friend";
+      case TypeStatus.FOLLOWER:
+        return "Friend invitation request";
+      case TypeStatus.FOLLOWING:
+        return "Friend request";
+      default:
+        return "Stranger";
+    }
+  }
+
   Contacts({
     required this.name,
     required this.phone,
