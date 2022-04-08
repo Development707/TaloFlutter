@@ -10,7 +10,7 @@ import '../services/socket_service.dart';
 class ProfileStore {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final client = ProfireDio();
-  final socket = SocketClient();
+  final socket = SocketService();
   static const profileKey = "profile:";
 
   // Singleton --------------------------

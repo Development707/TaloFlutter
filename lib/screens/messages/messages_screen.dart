@@ -22,7 +22,9 @@ class MessagesScreen extends StatelessWidget {
               Duration.zero, () => Navigator.of(context).pushNamed("/chat"));
         }
         return Scaffold(
-            appBar: buildAppBar(), body: MessagesBody(message: snapshot.data));
+            appBar: buildAppBar(),
+            body: MessagesBody(
+                message: snapshot.data, conversation: conversation));
       },
     );
   }

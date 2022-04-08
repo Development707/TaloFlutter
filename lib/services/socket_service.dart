@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:socket_io_client/socket_io_client.dart';
 
-class SocketClient {
+class SocketService {
   // Localhost: 10.0.2.2
   static const baseURL = "https://talodocker-mobile-42napghuea-as.a.run.app";
   final IO.Socket _socket = IO.io(
@@ -12,11 +12,11 @@ class SocketClient {
   );
 
   // Singleton --------------------------
-  static final SocketClient _singleton = SocketClient._internal();
-  factory SocketClient() {
+  static final SocketService _singleton = SocketService._internal();
+  factory SocketService() {
     return _singleton;
   }
-  SocketClient._internal();
+  SocketService._internal();
   // -------------------------------------
 
   IO.Socket get socket => _socket;

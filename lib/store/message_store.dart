@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/last_message.dart';
 import '../models/message.dart';
 import '../services/json_service.dart';
+import '../services/socket_service.dart';
 
 class MessageStore {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -12,6 +13,7 @@ class MessageStore {
   static const pageKey = "page:";
   static const sizeKey = "size:";
   static const totalPagesKey = "totalPaages:";
+  final socket = SocketService();
 
   // Singleton --------------------------
   static final MessageStore _singleton = MessageStore._internal();
@@ -33,6 +35,7 @@ class MessageStore {
       await prefs.setInt(pageKey + conversationId, message.page);
       await prefs.setInt(sizeKey + conversationId, message.size);
       await prefs.setInt(totalPagesKey + conversationId, message.totalPages);
+      socket.joinConversation(conversationId);
     }
     // Load to prefs
     data = listToJsonArray(prefs.getStringList(messageKey + conversationId));

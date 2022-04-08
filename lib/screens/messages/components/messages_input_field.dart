@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 
+import '../../../models/conversation.dart';
 import '../../../plugin/constants.dart';
+import '../../../store/message_store.dart';
 import 'message_files.dart';
 
 class MessagesInputField extends StatefulWidget {
-  const MessagesInputField({
-    Key? key,
-  }) : super(key: key);
+  const MessagesInputField({Key? key, this.conversation}) : super(key: key);
+  final Conversation? conversation;
 
   @override
   State<MessagesInputField> createState() => _MessagesInputFieldState();
@@ -16,7 +17,16 @@ class MessagesInputField extends StatefulWidget {
 class _MessagesInputFieldState extends State<MessagesInputField> {
   bool showEmoji = false;
   FocusNode focusNode = FocusNode();
-  final TextEditingController _ctrlText = TextEditingController();
+  final _ctrlText = TextEditingController();
+  final store = MessageStore();
+
+  void sendText() {
+    if (_ctrlText.text.isNotEmpty) {
+      store
+          .sendMessage(widget.conversation?.id, _ctrlText.text)
+          .then((value) => setState(() => _ctrlText.text = ""));
+    }
+  }
 
   @override
   void initState() {
@@ -114,7 +124,9 @@ class _MessagesInputFieldState extends State<MessagesInputField> {
                         )),
                     IconButton(
                       icon: const Icon(Icons.send, color: kPrimaryColor),
-                      onPressed: () {},
+                      onPressed: () {
+                        sendText();
+                      },
                     ),
                   ],
                 ),
