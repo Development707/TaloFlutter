@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_chatapp_v4_2/plugin/constants.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../../models/conversation.dart';
 import '../../../models/message.dart';
@@ -19,8 +20,30 @@ class MessagesBody extends StatefulWidget {
 }
 
 class _MessagesBodyState extends State<MessagesBody> {
-  final ProfileStore storeProfile = ProfileStore();
-  final ScrollController _scrollController = ScrollController();
+  final storeProfile = ProfileStore();
+  final _scrollController = ScrollController();
+  late IO.Socket socket;
+
+  @override
+  void initState() {
+    super.initState();
+    connectSockets();
+  }
+
+  void connectSockets() {
+    socket = IO.io(
+      "http://10.0.2.2:5000",
+      IO.OptionBuilder()
+          .setTransports(['websocket'])
+          .disableAutoConnect()
+          .build(),
+    );
+    socket.connect();
+    socket.onConnect((data) {
+      print("Connected");
+    });
+    print(socket.connected);
+  }
 
   @override
   Widget build(BuildContext context) {

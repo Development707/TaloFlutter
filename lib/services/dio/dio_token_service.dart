@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DioToken {
   final _storage = const FlutterSecureStorage();
-  static const baseURL = "https://talodocker-mobile-42napghuea-as.a.run.app";
+  static const baseURL = "http://10.0.2.2:5000";
   Dio api = Dio(BaseOptions(
     receiveDataWhenStatusError: true,
     connectTimeout: 20 * 1000,
@@ -52,6 +52,7 @@ class DioToken {
   }
 
   Future<void> refreshToken() async {
+    print("refresh token");
     final refreshToken = await _storage.read(key: "refreshToken");
     final response = await api.post(
       "/account/refresh-token",
