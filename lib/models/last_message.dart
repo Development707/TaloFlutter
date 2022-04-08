@@ -35,10 +35,11 @@ class LastMessage {
     required this.options,
   });
 
-  factory LastMessage.fromJson(Map<String, dynamic> json) {
-    MessageType convertTypeMessage(dynamic status) {
+  factory LastMessage.fromJson(Map<String, dynamic> json,
+      {MessageStatus status = MessageStatus.VIEWED}) {
+    MessageType convertTypeMessage(dynamic type) {
       return MessageType.values.firstWhere(
-        (e) => e.toString() == "MessageType." + status,
+        (e) => e.toString() == "MessageType." + type,
       );
     }
 
@@ -54,6 +55,7 @@ class LastMessage {
       user: ShortUser.fromJson(json["user"]),
       question: json["question"] ?? "",
       options: Option.fromJsonArray(json["options"] ?? []),
+      messageStatus: status,
     );
   }
 

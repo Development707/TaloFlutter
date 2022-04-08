@@ -46,4 +46,13 @@ class MessageStore {
       totalPages: totalPages ?? 1,
     );
   }
+
+  Future<LastMessage?> sendMessage(conversationId, content) async {
+    // Load to server
+    if (await hasNetwork()) {
+      var json = await client.sendMessage(conversationId, "TEXT", content);
+      return LastMessage.fromJson(json, status: MessageStatus.NOT_VIEW);
+    }
+    return null;
+  }
 }

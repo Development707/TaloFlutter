@@ -6,7 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'screens/chats/chats_screen.dart';
 import 'screens/group/create_group_screen.dart';
 import 'screens/login/login_screen_animation.dart';
-import 'screens/messages/messages_screen.dart';
 import 'screens/profile/components/profile_edit.dart';
 import 'screens/welcome/welcome_screen.dart';
 import 'plugin/theme.dart';
