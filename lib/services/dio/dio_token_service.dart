@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../plugin/constants.dart';
+
 class DioToken {
   final _storage = const FlutterSecureStorage();
-  static const baseURL = "http://10.0.2.2:5000";
   Dio api = Dio(BaseOptions(
     receiveDataWhenStatusError: true,
     connectTimeout: 20 * 1000,

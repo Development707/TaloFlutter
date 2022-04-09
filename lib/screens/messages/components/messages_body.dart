@@ -3,6 +3,7 @@ import 'package:flutter_mobile_chatapp_v4_2/plugin/constants.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../../models/conversation.dart';
+import '../../../models/last_message.dart';
 import '../../../models/message.dart';
 import '../../../models/user.dart';
 import '../../../store/profile_store.dart';
@@ -32,7 +33,7 @@ class _MessagesBodyState extends State<MessagesBody> {
 
   void connectSockets() {
     socket = IO.io(
-      "http://10.0.2.2:5000",
+      baseURL,
       IO.OptionBuilder()
           .setTransports(['websocket'])
           .disableAutoConnect()
@@ -40,9 +41,26 @@ class _MessagesBodyState extends State<MessagesBody> {
     );
     socket.connect();
     socket.onConnect((data) {
-      print("Connected");
+      print("connected");
+      socket.emit("ConversationJoin", widget.conversation?.id);
+      socket.on(
+          "MessageNew",
+          (data) => setState(() {
+                if (data[0] == widget.conversation?.id) {
+                  widget.message?.data.add(LastMessage.fromJson(data[1]));
+                  scrollToEnd(300);
+                }
+              }));
     });
-    print(socket.connected);
+    socket.onDisconnect((data) => print("Disconnect"));
+  }
+
+  void scrollToEnd(int milliseconds) {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: milliseconds),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
@@ -66,6 +84,7 @@ class _MessagesBodyState extends State<MessagesBody> {
   }
 
   Widget buildBody(User? user) {
+    Future.delayed(Duration.zero, () => scrollToEnd(100));
     return Column(
       children: [
         Expanded(

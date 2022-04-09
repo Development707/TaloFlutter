@@ -6,11 +6,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../models/account.dart';
 import '../../models/token.dart';
+import '../../plugin/constants.dart';
 
 class DioAuth {
   // Andoird 10.0.2.2
   // Web 127.0.0.1
-  static const baseURL = "http://10.0.2.2:5000";
   static const accountEndpoint = "/account";
   static const firebaseEndpoint = "/firebase/auth";
   final _storage = const FlutterSecureStorage();

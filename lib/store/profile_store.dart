@@ -5,12 +5,10 @@ import '../models/contacts.dart';
 import '../models/user.dart';
 import '../services/dio/profile_dio.dart';
 import '../services/json_service.dart';
-import '../services/socket_service.dart';
 
 class ProfileStore {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final client = ProfireDio();
-  final socket = SocketService();
   static const profileKey = "profile:";
 
   // Singleton --------------------------
@@ -28,7 +26,6 @@ class ProfileStore {
       var json = await client.getProfile();
       await prefs.setString(profileKey, jsonToString(json));
       var user = User.fromJson(json);
-      socket.userOnline(user.id);
       return user;
     }
     data = stringToJson(prefs.getString(profileKey));
