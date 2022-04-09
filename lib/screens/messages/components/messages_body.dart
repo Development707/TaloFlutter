@@ -26,6 +26,13 @@ class _MessagesBodyState extends State<MessagesBody> {
   late IO.Socket socket;
 
   @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     connectSockets();

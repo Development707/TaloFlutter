@@ -90,6 +90,10 @@ class _MessagesInputFieldState extends State<MessagesInputField> {
                               child: TextField(
                                 focusNode: focusNode,
                                 controller: _ctrlText,
+                                textInputAction: TextInputAction.send,
+                                onSubmitted: (value) {
+                                  sendText();
+                                },
                                 textCapitalization:
                                     TextCapitalization.sentences,
                                 decoration: const InputDecoration(
