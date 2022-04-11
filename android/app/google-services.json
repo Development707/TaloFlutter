@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:771338672762:android:45d7b26bbbf29d8cadb9c3",
+        "mobilesdk_app_id": "1:771338672762:android:9d19f4745276037eadb9c3",
         "android_client_info": {
-          "package_name": "com.example.flutter_mobile_chatapp_v4_2"
+          "package_name": "com.flutter_mobile_chatapp_v4_2"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "771338672762-qu68ok2gir5clfpbiu3l88crdlptnego.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutter_mobile_chatapp_v4_2",
+            "certificate_hash": "b8aa974d2aad1aeeec1410b5633973375ff3727f"
+          }
+        },
         {
           "client_id": "771338672762-bs8t8igplh6m93s1ovs3r6kaaiug4h7u.apps.googleusercontent.com",
           "client_type": 3
