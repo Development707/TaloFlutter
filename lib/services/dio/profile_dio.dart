@@ -54,4 +54,19 @@ class ProfireDio {
       throw Exception(err.message);
     }
   }
+
+  Future<dynamic> getAllRequest() async {
+    try {
+      final res = await dioToken.api.get("/friend/requests");
+      return res.data;
+    } on DioError catch (err) {
+      log("Dio Profile Service: " + err.response.toString());
+      if (err.type == DioErrorType.response) {
+        if (err.response?.statusCode == 400) {
+          throw Exception('Error: ${err.response?.data["message"]}');
+        }
+      }
+      throw Exception(err.message);
+    }
+  }
 }

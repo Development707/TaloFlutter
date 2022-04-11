@@ -1,4 +1,5 @@
 import 'package:flutter_contacts/contact.dart';
+import 'package:flutter_mobile_chatapp_v4_2/models/friend_request.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/contacts.dart';
@@ -49,5 +50,17 @@ class ProfileStore {
           {"name": e.displayName.toString(), "phone": e.phones[0].number});
       if (list.isNotEmpty) await client.asyncContacts(list);
     }
+  }
+
+  Future<List<FriendRequest>> getAllRequest() async {
+    List<dynamic> data = [];
+    var prefs = await _prefs;
+    if (await hasNetwork()) {
+      var json = await client.getAllRequest();
+      await prefs.setStringList(
+          profileKey + "friendRequest:", jsonArrayToList(json));
+    }
+    data = listToJsonArray(prefs.getStringList(profileKey + "friendRequest:"));
+    return FriendRequest.listFromJsonArray(data);
   }
 }

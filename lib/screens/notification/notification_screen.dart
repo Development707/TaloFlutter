@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../models/friend_request.dart';
 import '../../plugin/constants.dart';
+import '../../store/profile_store.dart';
 import 'components/notification_item.dart';
 
 class NotificationScreen extends StatelessWidget {
@@ -8,6 +10,24 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = ProfileStore();
+
+    return FutureBuilder<List<FriendRequest>>(
+        future: store.getAllRequest(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            Future.delayed(
+                Duration.zero, () => Navigator.of(context).pushNamed("/chat"));
+          }
+          if (snapshot.hasData) {
+            return buildBody(context, snapshot.data ?? []);
+          } else {
+            return const LinearProgressIndicator(color: kPrimaryColor);
+          }
+        });
+  }
+
+  GestureDetector buildBody(BuildContext context, List<FriendRequest> list) {
     return GestureDetector(
       child: Column(
         children: [
@@ -31,12 +51,12 @@ class NotificationScreen extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) => NotificationItem(
                 icon: Icons.bookmark,
-                title: "ABC",
+                title: list[index].name,
                 callback: () {
                   print(index);
                 },
               ),
-              itemCount: 10,
+              itemCount: list.length,
             ),
           ),
         ],

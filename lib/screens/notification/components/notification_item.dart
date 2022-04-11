@@ -47,7 +47,11 @@ class NotificationItem extends StatelessWidget {
                     color: kPrimaryColor,
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(icon, size: 15)),
+                  child: Icon(
+                    icon,
+                    size: 15,
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                  )),
             ),
           ],
         ),
