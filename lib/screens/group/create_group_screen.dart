@@ -83,7 +83,11 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
       itemCount: _contacts.length + 1,
       itemBuilder: (_, index) {
         if (index == 0) {
-          return const GroupButton(name: "New Contact", icon: Icons.person_add);
+          return InkWell(
+            onTap: () => openDialogSendRequest(),
+            child:
+                const GroupButton(name: "New Contact", icon: Icons.person_add),
+          );
         }
         return InkWell(
           onTap: () {
@@ -116,6 +120,31 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
         );
       },
     );
+  }
+
+  Future<void> openDialogSendRequest() {
+    var _requestController = TextEditingController();
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text("Send Request Friend"),
+              content: TextField(
+                autofocus: true,
+                controller: _requestController,
+                decoration: InputDecoration(hintText: "Enter phone or mail"),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () async {
+                    if (_requestController.text.length > 5) {
+                      await store.sendRequest(_requestController.text);
+                    }
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("SEND"),
+                )
+              ],
+            ));
   }
 
   AppBar buildAppBar() {
