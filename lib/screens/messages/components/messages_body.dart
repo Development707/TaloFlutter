@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_chatapp_v4_2/plugin/constants.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../../models/conversation.dart';
 import '../../../models/last_message.dart';
 import '../../../models/message.dart';
 import '../../../models/user.dart';
+import '../../../services/socket_io_service.dart';
 import '../../../store/profile_store.dart';
 import 'messages_input_field.dart';
 import 'messages_item.dart';
@@ -23,43 +23,20 @@ class MessagesBody extends StatefulWidget {
 class _MessagesBodyState extends State<MessagesBody> {
   final storeProfile = ProfileStore();
   final _scrollController = ScrollController();
-  late IO.Socket socket;
-
-  @override
-  void setState(fn) {
-    if (mounted) {
-      super.setState(fn);
-    }
-  }
+  final socketService = SocketIoService();
 
   @override
   void initState() {
     super.initState();
-    connectSockets();
-  }
-
-  void connectSockets() {
-    socket = IO.io(
-      baseURL,
-      IO.OptionBuilder()
-          .setTransports(['websocket'])
-          .disableAutoConnect()
-          .build(),
-    );
-    socket.connect();
-    socket.onConnect((data) {
-      print("connected");
-      socket.emit("ConversationJoin", widget.conversation?.id);
-      socket.on(
-          "MessageNew",
-          (data) => setState(() {
-                if (data[0] == widget.conversation?.id) {
-                  widget.message?.data.add(LastMessage.fromJson(data[1]));
-                  scrollToEnd(300);
-                }
-              }));
-    });
-    socket.onDisconnect((data) => print("Disconnect"));
+    socketService.createSocketConnection();
+    socketService.socket.on(
+        "MessageNew",
+        (data) => setState(() {
+              if (data[0] == widget.conversation?.id) {
+                widget.message?.data.add(LastMessage.fromJson(data[1]));
+                scrollToEnd(300);
+              }
+            }));
   }
 
   void scrollToEnd(int milliseconds) {
@@ -91,20 +68,29 @@ class _MessagesBodyState extends State<MessagesBody> {
   }
 
   Widget buildBody(User? user) {
-    Future.delayed(Duration.zero, () => scrollToEnd(100));
-    return Column(
-      children: [
-        Expanded(
-            flex: 1,
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: widget.message!.data.length,
-              itemBuilder: (context, index) => MessageItem(
-                  message: widget.message!.data[index],
-                  isSender: widget.message!.data[index].user.id == user!.id),
-            )),
-        MessagesInputField(conversation: widget.conversation),
-      ],
+    Future.delayed(Duration.zero, () {
+      scrollToEnd(100);
+      socketService.socket.emit("ConversationJoin", widget.conversation?.id);
+    });
+    return WillPopScope(
+      onWillPop: () async {
+        socketService.socket.dispose();
+        return true;
+      },
+      child: Column(
+        children: [
+          Expanded(
+              flex: 1,
+              child: ListView.builder(
+                controller: _scrollController,
+                itemCount: widget.message!.data.length,
+                itemBuilder: (context, index) => MessageItem(
+                    message: widget.message!.data[index],
+                    isSender: widget.message!.data[index].user.id == user!.id),
+              )),
+          MessagesInputField(conversation: widget.conversation),
+        ],
+      ),
     );
   }
 }
