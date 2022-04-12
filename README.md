@@ -10,3 +10,14 @@ run app Chrome: flutter run -d chrome --web-renderer html
 ## Avatar No URL
 
 https://storage.googleapis.com/talo-public-file/no-avatar.png
+
+# Build App
+
+## Web
+
+`flutter build web`
+
+## Andoird
+
+Deploy: `flutter build appbundle`
+APK: `flutter build apk --split-per-abi`

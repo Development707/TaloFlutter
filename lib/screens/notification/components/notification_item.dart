@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import '../../../plugin/constants.dart';
 
 class NotificationItem extends StatelessWidget {
-  final String url;
+  final String? url;
   final String title;
   final String time;
   final IconData icon;
   final Function callback;
   const NotificationItem({
-    this.url = "https://storage.googleapis.com/talo-public-file/no-avatar.png",
-    this.title = "",
-    this.time = "--:--",
+    this.url,
+    required this.title,
+    required this.time,
     required this.icon,
     required this.callback,
     Key? key,
@@ -29,7 +29,8 @@ class NotificationItem extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             CachedNetworkImage(
-              imageUrl: url,
+              imageUrl: url ??
+                  "https://storage.googleapis.com/talo-public-file/no-avatar.png",
               imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
