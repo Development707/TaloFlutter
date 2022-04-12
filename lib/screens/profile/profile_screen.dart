@@ -74,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
             text: "Log Out",
             color: kTertiaryColor,
             press: () async {
-              if (!kIsWeb) await signOut();
+              await signOut();
               await client.logout(_context);
             },
           ),

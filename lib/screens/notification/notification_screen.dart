@@ -51,10 +51,12 @@ class NotificationScreen extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) => NotificationItem(
                 icon: Icons.person,
-                title: list[index].name,
+                title: list[index].name + ": " + list[index].message,
                 url: list[index].avatar.url,
                 time: "Mutuak Firend: " +
-                    list[index].numberMutualFriend.toString(),
+                    list[index].numberMutualFriend.toString() +
+                    " - Mutuak Group: " +
+                    list[index].numberMutualGroup.toString(),
                 callback: () {},
               ),
               itemCount: list.length,
