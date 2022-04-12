@@ -28,8 +28,9 @@ class _ChatsBodyState extends State<ChatsBody> {
         future: store.loadServer(),
         builder: (_context, snapshot) {
           if (snapshot.hasError) {
-            Future.delayed(Duration.zero,
-                () => Navigator.of(context).popAndPushNamed("/login"));
+            print(snapshot.error);
+            // Future.delayed(Duration.zero,
+            //     () => Navigator.of(context).popAndPushNamed("/login"));
           }
           if (snapshot.hasData) {
             return buildChatBody(snapshot.data ?? []);

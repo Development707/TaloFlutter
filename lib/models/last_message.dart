@@ -3,6 +3,8 @@
 import 'package:flutter_mobile_chatapp_v4_2/models/react.dart';
 import 'package:flutter_mobile_chatapp_v4_2/models/short_user.dart';
 
+import '../services/json_service.dart';
+
 enum MessageType { VOTE, TEXT, HTML, NOTIFY, STICKER, VIDEO, FILE, IMAGE }
 enum MessageStatus { ERROR, NOT_VIEW, VIEWED }
 
@@ -13,8 +15,8 @@ class LastMessage {
   final MessageType type;
   final DateTime createdAt;
   final List<ShortUser> manipulatedUserIds;
-  final List<ShortUser> tags;
-  final List<ShortUser> deletedUserIds;
+  final List<String> tags;
+  final List<String> deletedUserIds;
   final List<React> reacts;
   final MessageStatus messageStatus;
   final String question;
@@ -46,10 +48,10 @@ class LastMessage {
     return LastMessage(
       manipulatedUserIds: ShortUser.fromJsonArray(json["manipulatedUserIds"]),
       content: json["content"],
-      tags: ShortUser.fromJsonArray(json["tags"]),
+      tags: jsonArrayToList(json["tags"]),
       type: convertTypeMessage(json["type"]),
-      deletedUserIds: ShortUser.fromJsonArray(json["deletedUserIds"]),
-      reacts: React.fromJsonArray(json["reacts"]),
+      deletedUserIds: jsonArrayToList(json["deletedUserIds"]),
+      reacts: [],
       createdAt: DateTime.parse(json["createdAt"]),
       id: json["id"],
       user: ShortUser.fromJson(json["user"]),
