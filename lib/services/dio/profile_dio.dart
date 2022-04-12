@@ -69,4 +69,19 @@ class ProfireDio {
       throw Exception(err.message);
     }
   }
+
+  Future<dynamic> appendRequest(String id) async {
+    try {
+      Map<String, dynamic> body = {"userId": id};
+      final res = await dioToken.api.post("/friend/requests", data: body);
+      return res.data;
+    } on DioError catch (_) {}
+  }
+
+  Future<dynamic> deleteRequest(String id) async {
+    try {
+      final res = await dioToken.api.delete("/friend/requests/" + id);
+      return res.data;
+    } on DioError catch (_) {}
+  }
 }

@@ -20,14 +20,15 @@ class NotificationScreen extends StatelessWidget {
                 Duration.zero, () => Navigator.of(context).pushNamed("/chat"));
           }
           if (snapshot.hasData) {
-            return buildBody(context, snapshot.data ?? []);
+            return buildBody(context, snapshot.data ?? [], store);
           } else {
             return const LinearProgressIndicator(color: kPrimaryColor);
           }
         });
   }
 
-  GestureDetector buildBody(BuildContext context, List<FriendRequest> list) {
+  GestureDetector buildBody(
+      BuildContext context, List<FriendRequest> list, ProfileStore store) {
     return GestureDetector(
       child: Column(
         children: [
@@ -57,7 +58,15 @@ class NotificationScreen extends StatelessWidget {
                     list[index].numberMutualFriend.toString() +
                     " - Mutuak Group: " +
                     list[index].numberMutualGroup.toString(),
-                callback: () {},
+                callback: (int result) {
+                  if (result == 1) {
+                    store.appendRequest(list[index].id).then(
+                        (value) => Navigator.of(context).pushNamed("/chat"));
+                  } else {
+                    store.deleteRequest(list[index].id).then(
+                        (value) => Navigator.of(context).pushNamed("/chat"));
+                  }
+                },
               ),
               itemCount: list.length,
             ),

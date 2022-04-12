@@ -8,7 +8,7 @@ class NotificationItem extends StatelessWidget {
   final String title;
   final String time;
   final IconData icon;
-  final Function callback;
+  final Function(int) callback;
   const NotificationItem({
     this.url,
     required this.title,
@@ -64,13 +64,19 @@ class NotificationItem extends StatelessWidget {
           overflow: TextOverflow.ellipsis),
       subtitle:
           Text(time, style: const TextStyle(fontSize: 14, color: Colors.grey)),
-      trailing: SizedBox(
-        height: 25,
-        width: 25,
-        child: IconButton(
-            padding: EdgeInsets.zero,
-            icon: Icon(Icons.more_vert, size: 28),
-            onPressed: () => callback),
+      trailing: PopupMenuButton<int>(
+        onSelected: callback,
+        icon: const Icon(Icons.more_vert, size: 28),
+        itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+          const PopupMenuItem<int>(
+            value: 1,
+            child: Text("Append Request Friend"),
+          ),
+          const PopupMenuItem<int>(
+            value: 0,
+            child: Text("Delete Request Friend"),
+          )
+        ],
       ),
     );
   }

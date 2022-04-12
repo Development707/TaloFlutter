@@ -63,4 +63,12 @@ class ProfileStore {
     data = listToJsonArray(prefs.getStringList(profileKey + "friendRequest:"));
     return FriendRequest.listFromJsonArray(data);
   }
+
+  Future<void> appendRequest(String id) async {
+    await client.appendRequest(id);
+  }
+
+  Future<void> deleteRequest(String id) async {
+    await client.deleteRequest(id);
+  }
 }
