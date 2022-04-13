@@ -17,7 +17,7 @@ class NotificationScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             Future.delayed(
-                Duration.zero, () => Navigator.of(context).pushNamed("/chat"));
+                Duration.zero, () => Navigator.of(context).pushNamed("/"));
           }
           if (snapshot.hasData) {
             return buildBody(context, snapshot.data ?? [], store);
@@ -60,11 +60,13 @@ class NotificationScreen extends StatelessWidget {
                     list[index].numberMutualGroup.toString(),
                 callback: (int result) {
                   if (result == 1) {
-                    store.appendRequest(list[index].id).then(
-                        (value) => Navigator.of(context).pushNamed("/chat"));
+                    store
+                        .appendRequest(list[index].id)
+                        .then((value) => Navigator.of(context).pushNamed("/"));
                   } else {
-                    store.deleteRequest(list[index].id).then(
-                        (value) => Navigator.of(context).pushNamed("/chat"));
+                    store
+                        .deleteRequest(list[index].id)
+                        .then((value) => Navigator.of(context).pushNamed("/"));
                   }
                 },
               ),

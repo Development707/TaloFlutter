@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 var verificationIdResult = '';
+var confirmationResult;
 
 Future<UserCredential> signInWithFacebook() async {
   if (kIsWeb) {
@@ -51,27 +52,36 @@ Future<UserCredential> signInWithGoogle() async {
 }
 
 Future<void> signUpWithPhoneNumber(phoneNumber) async {
-  await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        // Sign the user in (or link) with the auto-generated credential
-        await FirebaseAuth.instance.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        throw e;
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        verificationIdResult = verificationId;
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {
-        // Auto-resolution timed out...
-      });
+  if (kIsWeb) {
+    confirmationResult =
+        await FirebaseAuth.instance.signInWithPhoneNumber(phoneNumber);
+  } else {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // Sign the user in (or link) with the auto-generated credential
+          await FirebaseAuth.instance.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          throw e;
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          verificationIdResult = verificationId;
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          // Auto-resolution timed out...
+        });
+  }
 }
 
 Future<UserCredential> verifyOTP(String verificationId, String smsCode) async {
-  PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: verificationId, smsCode: smsCode);
-  return await FirebaseAuth.instance.signInWithCredential(credential);
+  if (kIsWeb) {
+    return await confirmationResult.confirm(smsCode);
+  } else {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId, smsCode: smsCode);
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 }
 
 Future<String> getIdToken() async {

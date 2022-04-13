@@ -31,8 +31,8 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             future: store.getContacts(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                Future.delayed(Duration.zero,
-                    () => Navigator.of(context).pushNamed("/chat"));
+                Future.delayed(
+                    Duration.zero, () => Navigator.of(context).pushNamed("/"));
               }
               if (snapshot.hasData) {
                 List<Contacts> contacts = snapshot.data ?? [];
@@ -163,8 +163,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             if (contactsSelectedList.length > 1) {
               store
                   .createGroup(contactsSelectedList.map((e) => e.id).toList())
-                  .then((_) =>
-                      Navigator.of(context).pushReplacementNamed("/chat"));
+                  .then((_) => Navigator.of(context).pushReplacementNamed("/"));
             } else {
               Fluttertoast.showToast(
                   msg: "Member invalid > 1 member",

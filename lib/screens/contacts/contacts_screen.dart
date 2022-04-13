@@ -28,7 +28,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             Future.delayed(
-                Duration.zero, () => Navigator.of(context).pushNamed("/chat"));
+                Duration.zero, () => Navigator.of(context).pushNamed("/"));
           }
           if (snapshot.hasData) {
             return buildContacts(snapshot.data ?? []);

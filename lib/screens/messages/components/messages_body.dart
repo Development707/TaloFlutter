@@ -54,8 +54,8 @@ class _MessagesBodyState extends State<MessagesBody> {
             future: storeProfile.getProFile(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                Future.delayed(Duration.zero,
-                    () => Navigator.of(context).pushNamed("/chat"));
+                Future.delayed(
+                    Duration.zero, () => Navigator.of(context).pushNamed("/"));
               }
               if (snapshot.hasData) {
                 return buildBody(snapshot.data);

@@ -19,7 +19,7 @@ class MessagesScreen extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           Future.delayed(
-              Duration.zero, () => Navigator.of(context).pushNamed("/chat"));
+              Duration.zero, () => Navigator.of(context).pushNamed("/"));
         }
         return Scaffold(
             appBar: buildAppBar(),

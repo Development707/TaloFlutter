@@ -30,7 +30,7 @@ class SignInFormState extends State<SignInForm> {
           .then((token) => client
               .loginWithToken(token, context)
               .then((_) => Future.delayed(Duration.zero, () {
-                    Navigator.of(context).pushReplacementNamed("/chat");
+                    Navigator.of(context).pushReplacementNamed("/");
                   }))
               .catchError((e) => setState(() => _error = e.message)))
           .catchError((e) => setState(() => _error = e.message));

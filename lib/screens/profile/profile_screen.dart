@@ -21,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
         builder: (_context, snapshot) {
           if (snapshot.hasError) {
             Future.delayed(
-                Duration.zero, () => Navigator.of(context).pushNamed("/chat"));
+                Duration.zero, () => Navigator.of(context).pushNamed("/"));
           }
           if (snapshot.hasData) {
             return buildProfile(snapshot.data, _context);
