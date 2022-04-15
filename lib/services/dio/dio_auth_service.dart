@@ -22,6 +22,24 @@ class DioAuth {
     receiveTimeout: 20 * 1000,
   ));
 
+  Future<String> refreshToken(String refreshToken) async {
+    try {
+      final res = await api.post(
+        accountEndpoint + "/refresh-token",
+        data: {"refreshToken": refreshToken},
+      );
+      return res.data["token"];
+    } on DioError catch (err) {
+      log("Dio Auth Service: " + err.toString());
+      if (err.type == DioErrorType.response) {
+        if (err.response?.statusCode == 404) {
+          throw Exception('Error: ${err.response?.data["message"]}');
+        }
+      }
+      throw Exception(err.message);
+    }
+  }
+
   Future<Token> loginBasic(Account account) async {
     try {
       final res = await api.post(
@@ -114,8 +132,6 @@ class DioAuth {
   }
 
   Future<bool> checkIsLogIn() async {
-    var token = await _storage.read(key: "refreshToken");
-    if (token != null) return true;
-    return false;
+    return await _storage.containsKey(key: "refreshToken");
   }
 }

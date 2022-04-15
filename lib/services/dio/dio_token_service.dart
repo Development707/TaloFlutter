@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../plugin/constants.dart';
+import 'dio_auth_service.dart';
 
 class DioToken {
   final _storage = const FlutterSecureStorage();
@@ -54,15 +55,11 @@ class DioToken {
   Future<void> refreshToken() async {
     print("refresh token");
     final refreshToken = await _storage.read(key: "refreshToken");
-    final response = await api.post(
-      "/account/refresh-token",
-      data: {"refreshToken": refreshToken},
-    );
-    if (response.statusCode == 200) {
-      await _storage.write(key: "accessToken", value: response.data["token"]);
-    } else {
-      await _storage.deleteAll();
-    }
+    DioAuth()
+        .refreshToken(refreshToken ?? "")
+        .then((accessToken) async =>
+            await _storage.write(key: "accessToken", value: accessToken))
+        .catchError((_) async => await _storage.deleteAll());
   }
 
   getAccessToken() async {

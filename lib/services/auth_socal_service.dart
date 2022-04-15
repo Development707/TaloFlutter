@@ -91,6 +91,7 @@ Future<String> getIdToken() async {
 Future<void> signOut() async {
   if (getUserFirebase() != null) {
     await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
   }
 }
 
