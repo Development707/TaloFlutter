@@ -5,12 +5,11 @@ import '../../plugin/constants.dart';
 
 class DioToken {
   final _storage = const FlutterSecureStorage();
-  Dio api = Dio(BaseOptions(
+  final Dio api = Dio(BaseOptions(
     receiveDataWhenStatusError: true,
     connectTimeout: 20 * 1000,
     receiveTimeout: 20 * 1000,
   ));
-  String accessToken = "";
 
   DioToken() {
     api.interceptors.add(InterceptorsWrapper(
@@ -20,7 +19,7 @@ class DioToken {
           options.path = baseURL + options.path;
         }
         // Add token
-        options.headers["Authorization"] = "Bearer $accessToken";
+        options.headers["Authorization"] = "Bearer ${await getAccessToken()}";
         // Next request
         return handler.next(options);
       },
@@ -60,10 +59,13 @@ class DioToken {
       data: {"refreshToken": refreshToken},
     );
     if (response.statusCode == 200) {
-      accessToken = response.data["token"];
+      await _storage.write(key: "accessToken", value: response.data["token"]);
     } else {
-      accessToken = "";
-      _storage.deleteAll();
+      await _storage.deleteAll();
     }
+  }
+
+  getAccessToken() async {
+    return await _storage.read(key: "accessToken");
   }
 }

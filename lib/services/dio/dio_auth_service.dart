@@ -108,7 +108,7 @@ class DioAuth {
   }
 
   Future<void> logout(BuildContext context) async {
-    await _storage.write(key: "refreshToken", value: null);
+    await _storage.deleteAll();
     Future.delayed(
         Duration.zero, () => Navigator.pushReplacementNamed(context, "/login"));
   }

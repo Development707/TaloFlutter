@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 var verificationIdResult = '';
-var confirmationResult;
+ConfirmationResult? confirmationResult;
 
 Future<UserCredential> signInWithFacebook() async {
   if (kIsWeb) {
@@ -76,7 +76,7 @@ Future<void> signUpWithPhoneNumber(phoneNumber) async {
 
 Future<UserCredential> verifyOTP(String verificationId, String smsCode) async {
   if (kIsWeb) {
-    return await confirmationResult.confirm(smsCode);
+    return await confirmationResult!.confirm(smsCode);
   } else {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verificationId, smsCode: smsCode);
@@ -89,8 +89,9 @@ Future<String> getIdToken() async {
 }
 
 Future<void> signOut() async {
-  await FirebaseAuth.instance.signOut();
-  await GoogleSignIn().disconnect();
+  if (getUserFirebase() != null) {
+    await FirebaseAuth.instance.signOut();
+  }
 }
 
 User? getUserFirebase() {
