@@ -22,18 +22,11 @@ class SignInFormState extends State<SignInForm> {
   bool showLoad = false;
   String? _error, _username, _password;
 
-  void checkLogged() async {
-    if (getUserFirebase() != null) {
-      String idToken = await getIdToken();
-      client
-          .loginFirebaseByIdToken(idToken)
-          .then((token) => client
-              .loginWithToken(token, context)
-              .then((_) => Future.delayed(Duration.zero, () {
-                    Navigator.of(context).pushReplacementNamed("/");
-                  }))
-              .catchError((e) => setState(() => _error = e.message)))
-          .catchError((e) => setState(() => _error = e.message));
+  void checkIsLogIn() async {
+    if (await client.checkIsLogIn()) {
+      Future.delayed(Duration.zero, () {
+        Navigator.of(context).pushReplacementNamed("/");
+      });
     }
   }
 

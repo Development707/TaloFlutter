@@ -47,8 +47,7 @@ class MyApp extends StatelessWidget {
         "/": (_) =>
             globals.isFistLogin ? const WelcomeScreen() : const ChatsScreen(),
         "/login": (_) => const LoginScreenAnimation(),
-        "/chat": (_) => const ChatsScreen(),
-        "/chat/create-group": (_) => const CreateGroupScreen(),
+        "/create-group": (_) => const CreateGroupScreen(),
         "/profile": (_) => const ProfileEdit(),
       },
     );

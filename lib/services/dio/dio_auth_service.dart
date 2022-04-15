@@ -101,7 +101,7 @@ class DioAuth {
     if (token.refreshToken.isNotEmpty) {
       await _storage.write(key: "refreshToken", value: token.refreshToken);
       Future.delayed(
-          Duration.zero, () => Navigator.of(context).popAndPushNamed("/chat"));
+          Duration.zero, () => Navigator.of(context).popAndPushNamed("/"));
     } else {
       throw Exception("Token invalid");
     }
@@ -111,5 +111,11 @@ class DioAuth {
     await _storage.deleteAll();
     Future.delayed(
         Duration.zero, () => Navigator.pushReplacementNamed(context, "/login"));
+  }
+
+  Future<bool> checkIsLogIn() async {
+    var token = await _storage.read(key: "refreshToken");
+    if (token != null) return true;
+    return false;
   }
 }

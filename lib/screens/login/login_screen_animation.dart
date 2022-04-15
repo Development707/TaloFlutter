@@ -43,7 +43,7 @@ class _LoginScreenAnimationState extends State<LoginScreenAnimation>
   void initState() {
     super.initState();
     setUpAnimation();
-    Future.delayed(Duration.zero, () => signInKey.currentState?.checkLogged());
+    Future.delayed(Duration.zero, () => signInKey.currentState?.checkIsLogIn());
   }
 
   @override
