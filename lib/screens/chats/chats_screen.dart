@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../models/user.dart';
 import '../../plugin/constants.dart';
 import '../../services/dio/dio_auth_service.dart';
+import '../../services/socket_io_service.dart';
 import '../profile/profile_screen.dart';
 import 'components/chats_body.dart';
 
@@ -21,6 +22,7 @@ class ChatsScreen extends StatefulWidget {
 class _ChatsScreenState extends State<ChatsScreen> {
   final ProfileStore store = ProfileStore();
   final DioAuth client = DioAuth();
+  final socketService = SocketIoService();
   DateTime currentBackPressTime = DateTime.now();
   int _selectedIndex = 0;
   static const List<Widget> __widgetOptions = <Widget>[
@@ -36,7 +38,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
         future: store.getProFile(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            client.logout(context).then((value) => print("Data has Error"));
+            client.logout(context).then((_) => print("Data has Error"));
           }
           if (snapshot.hasData) {
             return buildChat(snapshot.data);
@@ -53,6 +55,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
   }
 
   Scaffold buildChat(User? user) {
+    socketService.createSocketConnection();
+    socketService.socket.emit('UserOnline', user?.id);
     return Scaffold(
       appBar: buildAppBar(),
       body: WillPopScope(

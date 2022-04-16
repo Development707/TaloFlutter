@@ -14,7 +14,7 @@ class Conversation {
   final int numberUnread;
   final bool isNotify;
   final bool isJoinFromLink;
-  final LastMessage? lastMessage;
+  LastMessage? lastMessage;
   final List<String> managerIds;
 
   Conversation({

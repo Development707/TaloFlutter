@@ -26,9 +26,15 @@ class _MessagesBodyState extends State<MessagesBody> {
   final socketService = SocketIoService();
 
   @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
-    socketService.createSocketConnection();
     socketService.socket.on(
         "MessageNew",
         (data) => setState(() {
@@ -70,27 +76,20 @@ class _MessagesBodyState extends State<MessagesBody> {
   Widget buildBody(User? user) {
     Future.delayed(Duration.zero, () {
       scrollToEnd(100);
-      socketService.socket.emit("ConversationJoin", widget.conversation?.id);
     });
-    return WillPopScope(
-      onWillPop: () async {
-        socketService.socket.dispose();
-        return true;
-      },
-      child: Column(
-        children: [
-          Expanded(
-              flex: 1,
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: widget.message!.data.length,
-                itemBuilder: (context, index) => MessageItem(
-                    message: widget.message!.data[index],
-                    isSender: widget.message!.data[index].user.id == user!.id),
-              )),
-          MessagesInputField(conversation: widget.conversation),
-        ],
-      ),
+    return Column(
+      children: [
+        Expanded(
+            flex: 1,
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: widget.message!.data.length,
+              itemBuilder: (context, index) => MessageItem(
+                  message: widget.message!.data[index],
+                  isSender: widget.message!.data[index].user.id == user!.id),
+            )),
+        MessagesInputField(conversation: widget.conversation),
+      ],
     );
   }
 }

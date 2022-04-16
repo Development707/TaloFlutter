@@ -5,6 +5,7 @@ import 'package:flutter_mobile_chatapp_v4_2/plugin/constants.dart';
 import '../../models/user.dart';
 import '../../services/auth_socal_service.dart';
 import '../../services/dio/dio_auth_service.dart';
+import '../../services/socket_io_service.dart';
 import '../../store/profile_store.dart';
 import 'components/profile_avatar.dart';
 import 'components/profile_menu.dart';
@@ -74,6 +75,7 @@ class ProfileScreen extends StatelessWidget {
             text: "Log Out",
             color: kTertiaryColor,
             press: () async {
+              SocketIoService().socket.dispose();
               await signOut();
               await client.logout(_context);
             },

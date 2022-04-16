@@ -1,17 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile_chatapp_v4_2/models/avatar.dart';
+import 'package:flutter_mobile_chatapp_v4_2/services/socket_io_service.dart';
 
 import '../../models/friend_request.dart';
 import '../../plugin/constants.dart';
 import '../../store/profile_store.dart';
 import 'components/notification_item.dart';
 
-class NotificationScreen extends StatelessWidget {
+class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final store = ProfileStore();
+  State<NotificationScreen> createState() => _NotificationScreenState();
+}
 
+class _NotificationScreenState extends State<NotificationScreen> {
+  final store = ProfileStore();
+  late List<FriendRequest> list;
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SocketIoService().socket.on("FriendRequestSend", (data) {
+      setState(() {
+        list.add(FriendRequest(
+            id: data["id"],
+            name: data["name"],
+            message: "New request by Friend",
+            avatar: Avatar.fromJson(data["avatar"]),
+            numberMutualGroup: 0,
+            numberMutualFriend: 0));
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder<List<FriendRequest>>(
         future: store.getAllRequest(),
         builder: (context, snapshot) {
@@ -20,15 +51,15 @@ class NotificationScreen extends StatelessWidget {
                 Duration.zero, () => Navigator.of(context).pushNamed("/"));
           }
           if (snapshot.hasData) {
-            return buildBody(context, snapshot.data ?? [], store);
+            list = snapshot.data ?? [];
+            return buildBody(context);
           } else {
             return const LinearProgressIndicator(color: kPrimaryColor);
           }
         });
   }
 
-  GestureDetector buildBody(
-      BuildContext context, List<FriendRequest> list, ProfileStore store) {
+  GestureDetector buildBody(BuildContext context) {
     return GestureDetector(
       child: Column(
         children: [

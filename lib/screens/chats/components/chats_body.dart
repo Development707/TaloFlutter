@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../components/filled_outline_button.dart';
 import '../../../models/conversation.dart';
+import '../../../models/last_message.dart';
 import '../../../plugin/constants.dart';
+import '../../../services/socket_io_service.dart';
 import '../../../store/conversation_store.dart';
 import '../../messages/messages_screen.dart';
 import 'chats_card.dart';
@@ -15,11 +17,28 @@ class ChatsBody extends StatefulWidget {
 }
 
 class _ChatsBodyState extends State<ChatsBody> {
-  final ConversationStore store = ConversationStore();
+  final store = ConversationStore();
+  final socketIO = SocketIoService();
+  late List<Conversation> items;
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    socketIO.socket.on(
+        "MessageNew",
+        (data) => setState(() {
+              items.firstWhere((conver) => conver.id == data[0]).lastMessage =
+                  LastMessage.fromJson(data[1]);
+            }));
+    socketIO.socket.on("ConversationGroupCreate", (data) => print(data));
+    socketIO.socket.on("ConversationDuaCreate", (data) => print(data));
   }
 
   @override
@@ -28,19 +47,19 @@ class _ChatsBodyState extends State<ChatsBody> {
         future: store.loadServer(),
         builder: (_context, snapshot) {
           if (snapshot.hasError) {
-            print(snapshot.error);
-            // Future.delayed(Duration.zero,
-            //     () => Navigator.of(context).popAndPushNamed("/login"));
+            Future.delayed(Duration.zero,
+                () => Navigator.of(context).popAndPushNamed("/login"));
           }
           if (snapshot.hasData) {
-            return buildChatBody(snapshot.data ?? []);
+            items = snapshot.data ?? [];
+            return buildChatBody();
           } else {
             return const LinearProgressIndicator(color: kPrimaryColor);
           }
         });
   }
 
-  Column buildChatBody(List<Conversation> items) {
+  Column buildChatBody() {
     return Column(
       children: [
         Container(
@@ -66,18 +85,20 @@ class _ChatsBodyState extends State<ChatsBody> {
         ),
         Expanded(
             child: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) => ChatCard(
-            conversation: items[index],
-            press: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    MessagesScreen(conversation: items[index]),
-              ),
-            ),
-          ),
-        ))
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  socketIO.socket.emit('ConversationJoin', items[index].id);
+                  return ChatCard(
+                    conversation: items[index],
+                    press: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            MessagesScreen(conversation: items[index]),
+                      ),
+                    ),
+                  );
+                }))
       ],
     );
   }
