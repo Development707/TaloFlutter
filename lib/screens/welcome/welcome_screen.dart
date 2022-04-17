@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../plugin/constants.dart';
-import '../../plugin/globals.dart' as globals;
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -11,12 +10,6 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () => globals.isFistLogin = false);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

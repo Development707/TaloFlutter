@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
-import 'screens/chats/chats_screen.dart';
 import 'screens/group/create_group_screen.dart';
+import 'screens/fisrt_screen.dart';
 import 'screens/login/login_screen_animation.dart';
 import 'screens/profile/components/profile_edit.dart';
-import 'screens/welcome/welcome_screen.dart';
 import 'plugin/theme.dart';
-import '../../plugin/globals.dart' as globals;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,8 +42,8 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       initialRoute: '/',
       routes: {
-        "/": (_) =>
-            globals.isFistLogin ? const WelcomeScreen() : const ChatsScreen(),
+        "/": (_) => const FirstScreen(),
+        // globals.isFistLogin ? const WelcomeScreen() : const ChatsScreen(),
         "/login": (_) => const LoginScreenAnimation(),
         "/create-group": (_) => const CreateGroupScreen(),
         "/profile": (_) => const ProfileEdit(),
