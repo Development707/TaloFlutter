@@ -39,9 +39,11 @@ class SignInFormState extends State<SignInForm> {
           .loginBasic(Account(
               username: _username.toString(), password: _password.toString()))
           .then((token) {
+            setState(() => showLoad = true);
             client
                 .loginWithToken(token, context)
-                .catchError((e) => _error = e.message);
+                .catchError((e) => _error = e.message)
+                .whenComplete(() => setState(() => showLoad = false));
           })
           .catchError((e) => _error = e.message)
           .whenComplete(() => setState(() => showLoad = false));
