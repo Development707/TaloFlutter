@@ -30,7 +30,7 @@ class GroupAvatar extends StatelessWidget {
                   placeholder: (context, url) =>
                       const CircularProgressIndicator(),
                   errorWidget: (context, url, error) =>
-                      const Icon(Icons.error)),
+                      Image.asset("assets/images/no-avatar.png")),
               const Positioned(
                   bottom: 0,
                   right: 0,

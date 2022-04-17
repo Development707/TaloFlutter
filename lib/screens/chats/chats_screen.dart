@@ -109,7 +109,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       image: DecorationImage(
                           image: imageProvider, fit: BoxFit.cover))),
               placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error)),
+              errorWidget: (context, url, error) =>
+                  Image.asset("assets/images/no-avatar.png")),
           label: "Profile",
         ),
       ],

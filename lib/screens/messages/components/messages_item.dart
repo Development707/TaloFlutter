@@ -66,7 +66,8 @@ class MessageItem extends StatelessWidget {
                             image: imageProvider, fit: BoxFit.cover))),
                 placeholder: (context, url) =>
                     const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error)),
+                errorWidget: (context, url, error) =>
+                    Image.asset("assets/images/no-avatar.png")),
             const SizedBox(width: kDefaultPadding / 2)
           ],
           Stack(clipBehavior: Clip.none, children: [

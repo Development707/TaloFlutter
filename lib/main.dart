@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         "/": (_) => const FirstScreen(),
-        // globals.isFistLogin ? const WelcomeScreen() : const ChatsScreen(),
         "/login": (_) => const LoginScreenAnimation(),
         "/create-group": (_) => const CreateGroupScreen(),
         "/profile": (_) => const ProfileEdit(),

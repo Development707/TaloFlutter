@@ -27,24 +27,25 @@ class ConstactsItem extends StatelessWidget {
       child: Row(
         children: [
           Container(
-              height: 70,
-              width: 70,
-              padding: const EdgeInsets.all(kDefaultPadding / 4),
-              child: CachedNetworkImage(
-                  imageUrl: contacts.avatar.url ??
-                      "https://storage.googleapis.com/talo-public-file/no-avatar.png",
-                  imageBuilder: (context, imageProvider) => Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.7),
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: imageProvider, fit: BoxFit.cover))),
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) =>
-                      const Icon(Icons.error))),
+            height: 70,
+            width: 70,
+            padding: const EdgeInsets.all(kDefaultPadding / 4),
+            child: CachedNetworkImage(
+                imageUrl: contacts.avatar.url ??
+                    "https://storage.googleapis.com/talo-public-file/no-avatar.png",
+                imageBuilder: (context, imageProvider) => Container(
+                    width: 35,
+                    height: 35,
+                    decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.7),
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover))),
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) =>
+                    Image.asset("assets/images/no-avatar.png")),
+          ),
           Expanded(
               child: Container(
             padding: const EdgeInsets.all(kDefaultPadding / 4),

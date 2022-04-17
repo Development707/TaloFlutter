@@ -29,16 +29,17 @@ class NotificationItem extends StatelessWidget {
           clipBehavior: Clip.none,
           children: [
             CachedNetworkImage(
-              imageUrl: url ??
-                  "https://storage.googleapis.com/talo-public-file/no-avatar.png",
-              imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: imageProvider, fit: BoxFit.cover))),
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
+                imageUrl: url ??
+                    "https://storage.googleapis.com/talo-public-file/no-avatar.png",
+                imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: imageProvider, fit: BoxFit.cover))),
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) =>
+                    Image.asset("assets/images/no-avatar.png")),
             Positioned(
               bottom: 0,
               right: -10,

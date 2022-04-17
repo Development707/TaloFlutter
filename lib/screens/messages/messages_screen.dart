@@ -46,7 +46,8 @@ class MessagesScreen extends StatelessWidget {
                       image: DecorationImage(
                           image: imageProvider, fit: BoxFit.cover))),
               placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error)),
+              errorWidget: (context, url, error) =>
+                  Image.asset("assets/images/no-avatar.png")),
           const SizedBox(width: kDefaultPadding * 0.75),
           // ignore: prefer_const_literals_to_create_immutables
           Expanded(

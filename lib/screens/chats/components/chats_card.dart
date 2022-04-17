@@ -39,7 +39,7 @@ class ChatCard extends StatelessWidget {
                     placeholder: (context, url) =>
                         const CircularProgressIndicator(),
                     errorWidget: (context, url, error) =>
-                        const Icon(Icons.error)),
+                        Image.asset("assets/images/no-avatar.png")),
                 if (!conversation.isNotify)
                   Positioned(
                     right: 0,

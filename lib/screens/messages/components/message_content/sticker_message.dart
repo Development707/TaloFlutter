@@ -16,12 +16,12 @@ class StickerMessage extends StatelessWidget {
     return SizedBox(
         width: 100,
         child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: CachedNetworkImage(
-                imageUrl: message.content,
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) =>
-                    const Icon(Icons.error))));
+          borderRadius: BorderRadius.circular(10),
+          child: CachedNetworkImage(
+              imageUrl: message.content,
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) =>
+                  Image.asset("assets/images/no-avatar.png")),
+        ));
   }
 }

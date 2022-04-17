@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile_chatapp_v4_2/models/last_message.dart';
+import 'package:flutter_mobile_chatapp_v4_2/screens/messages/components/message_content/video_remote_screen.dart';
 
 import '../../../../plugin/constants.dart';
 
@@ -21,9 +22,8 @@ class VideoMessage extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset("assets/images/talo_welcome.png"),
-              ),
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset("assets/images/talo.png")),
               Container(
                   height: 25,
                   width: 25,
@@ -31,10 +31,17 @@ class VideoMessage extends StatelessWidget {
                     color: kPrimaryColor,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
-                    Icons.play_arrow,
-                    size: 15,
-                    color: Colors.white,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) =>
+                              VideoRemoteScreen(url: message.content)));
+                    },
+                    icon: const Icon(
+                      Icons.play_arrow,
+                      size: 15,
+                      color: Colors.white,
+                    ),
                   ))
             ],
           )),
