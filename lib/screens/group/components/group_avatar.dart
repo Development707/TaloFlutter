@@ -42,10 +42,10 @@ class GroupAvatar extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 4),
-          Container(
+          SizedBox(
             width: 50,
             child: Text(contacts.name,
-                style: TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 12),
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1),

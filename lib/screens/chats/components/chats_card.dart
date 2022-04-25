@@ -80,7 +80,7 @@ class ChatCard extends StatelessWidget {
                                     conversation.lastMessage!.content,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis)
-                            : Text("")),
+                            : const Text("")),
                   ],
                 ),
               ),

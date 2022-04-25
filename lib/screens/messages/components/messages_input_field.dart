@@ -101,7 +101,7 @@ class _MessagesInputFieldState extends State<MessagesInputField> {
                               onTap: () => showModalBottomSheet(
                                   backgroundColor: Colors.transparent,
                                   context: context,
-                                  builder: (context) => MessageFile(context)),
+                                  builder: (context) => messageFile(context)),
                               child: Icon(
                                 Icons.attach_file,
                                 color: Theme.of(context)
@@ -140,7 +140,7 @@ class _MessagesInputFieldState extends State<MessagesInputField> {
                 },
               ),
             ),
-            showEmoji ? emojiField() : SizedBox(),
+            showEmoji ? emojiField() : const SizedBox(),
           ],
         ),
       ),

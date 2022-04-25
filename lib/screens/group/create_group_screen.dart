@@ -73,7 +73,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                       child:
                           GroupAvatar(contacts: contactsSelectedList[index]))),
             ),
-            Divider(thickness: 1)
+            const Divider(thickness: 1)
           ])
         : Container();
   }
@@ -131,7 +131,8 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               content: TextField(
                 autofocus: true,
                 controller: _requestController,
-                decoration: InputDecoration(hintText: "Enter phone or mail"),
+                decoration:
+                    const InputDecoration(hintText: "Enter phone or mail"),
               ),
               actions: [
                 TextButton(
@@ -141,7 +142,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                     }
                     Navigator.of(context).pop();
                   },
-                  child: Text("SEND"),
+                  child: const Text("SEND"),
                 )
               ],
             ));

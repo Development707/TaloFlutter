@@ -30,8 +30,8 @@ class VoteMessage extends StatelessWidget {
               domainAxis: const charts.OrdinalAxisSpec(
                   renderSpec: charts.NoneRenderSpec()),
               barRendererDecorator: charts.BarLabelDecorator(
-                insideLabelStyleSpec: charts.TextStyleSpec(),
-                outsideLabelStyleSpec: charts.TextStyleSpec(),
+                insideLabelStyleSpec: const charts.TextStyleSpec(),
+                outsideLabelStyleSpec: const charts.TextStyleSpec(),
               ),
             ),
           ),

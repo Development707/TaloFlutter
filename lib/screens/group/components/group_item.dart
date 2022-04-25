@@ -15,7 +15,7 @@ class GroupItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        leading: Container(
+        leading: SizedBox(
           height: 53,
           width: 50,
           child: Stack(
