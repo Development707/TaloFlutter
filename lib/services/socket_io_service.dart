@@ -6,8 +6,12 @@ import '../plugin/constants.dart';
 
 class SocketIoService {
   final Socket socket = io(
-    baseURL,
-    OptionBuilder().setTransports(['websocket']).disableAutoConnect().build(),
+    socketURL,
+    OptionBuilder()
+        .setTransports(['websocket'])
+        .disableAutoConnect()
+        .setPath('/mobile/socket.io/')
+        .build(),
   );
 
   // Singleton --------------------------
