@@ -14,7 +14,7 @@ class LastMessage {
   final String content;
   final MessageType type;
   final DateTime createdAt;
-  final List<ShortUser> manipulatedUserIds;
+  final List<ShortUser> handledUserIds;
   final List<String> tags;
   final List<String> deletedUserIds;
   final List<React> reacts;
@@ -28,7 +28,7 @@ class LastMessage {
     required this.content,
     required this.type,
     required this.createdAt,
-    required this.manipulatedUserIds,
+    required this.handledUserIds,
     required this.tags,
     required this.deletedUserIds,
     required this.reacts,
@@ -46,7 +46,7 @@ class LastMessage {
     }
 
     return LastMessage(
-      manipulatedUserIds: ShortUser.fromJsonArray(json["manipulatedUserIds"]),
+      handledUserIds: ShortUser.fromJsonArray(json["handledUserIds"]),
       content: json["content"],
       tags: jsonArrayToList(json["tags"]),
       type: convertTypeMessage(json["type"]),

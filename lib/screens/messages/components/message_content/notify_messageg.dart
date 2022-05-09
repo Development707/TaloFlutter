@@ -14,7 +14,7 @@ class NotifyMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String user = " ";
-    for (var sUser in message.manipulatedUserIds) {
+    for (var sUser in message.handledUserIds) {
       user += sUser.name + ", ";
     }
 
